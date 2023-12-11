@@ -77,6 +77,7 @@ WSGI_APPLICATION = 'accessories.wsgi.application'
 
 DATABASE = "Accessories"
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
