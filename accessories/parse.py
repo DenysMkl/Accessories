@@ -4,17 +4,18 @@ import requests
 from bs4 import BeautifulSoup as bs
 from pymongo.errors import DuplicateKeyError
 
-from accessories.storage.mongoDB import MongoDB
+from storage.mongoDB import MongoDB
 
-mydb = MongoDB()
+db = MongoDB()
+mydb = db.db_name
 
 headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                       'AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/91.0.4472.124 Safari/537.36'
     }
-url = 'https://www.ctrs.com.ua/chexly-i-sumki-dlya-noutbukov/'
-
+url_cases = 'https://www.ctrs.com.ua/chexly-i-sumki-dlya-noutbukov/'
+url_headphones = 'https://www.ctrs.com.ua/naushniki/'
 
 def parse_cases(acc_url, header, db, collection) -> None:
     page_number = 1
@@ -80,4 +81,5 @@ def parse_params(item_url, header):
     return dictionary_of_data
 
 
-parse_cases(url, headers, mydb, 'Headphones')
+parse_cases(url_cases, headers, mydb, 'Cases')
+# parse_cases(url_headphones, headers, mydb, 'Headphones')

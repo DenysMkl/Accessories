@@ -24,6 +24,7 @@ class MongoDB(metaclass=SingleDB):
     def get_data(self, col_name: str):
         collection = self.connect_to_collection(col_name.title())
         data = collection.find({}, {'_id': 1, 'model': 1, 'price': 1, 'image_link': 1})
+
         return data
 
     def close_connection(self):

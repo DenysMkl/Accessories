@@ -10,6 +10,10 @@ connect = MongoDB()
 
 
 @app.get('/items/{item_type}', response_model=List)
-def get_accessories(item_type: str):
+async def get_accessories(item_type: str,
+                          volume: int = 0,
+                          diagonal: str = '',
+                          model: str = ''):
     data = connect.get_data(item_type)
+
     return data
