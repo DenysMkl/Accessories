@@ -2,8 +2,6 @@ from abc import ABC, abstractmethod
 
 from accessories.storage.mongoDB import MongoDB
 
-connect = MongoDB()
-
 
 class Entity(ABC):
     def __init__(self, name, entered_data):

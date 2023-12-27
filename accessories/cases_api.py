@@ -1,7 +1,6 @@
 from typing import List
 
 from fastapi import FastAPI
-from fastapi.openapi.models import Response
 
 from accessories.storage.mongoDB import MongoDB
 from accessories import entities
@@ -20,5 +19,5 @@ async def get_accessories(item_type: str,
                   'model': model}
 
     data = entities.client_code(item_type, **get_params)
-    print(data)
+
     return data.get_data(connect)
