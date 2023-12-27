@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.openapi.models import Response
 
 from accessories.storage.mongoDB import MongoDB
-
+from accessories import entities
 
 app = FastAPI()
 connect = MongoDB()
@@ -18,5 +18,7 @@ async def get_accessories(item_type: str,
     get_params = {'volume': volume,
                   'diagonal': diagonal,
                   'model': model}
-    data = connect.get_data(item_type, **get_params)
-    return data
+
+    data = entities.client_code(item_type, **get_params)
+    print(data)
+    return data.get_data(connect)

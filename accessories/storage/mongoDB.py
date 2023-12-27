@@ -23,14 +23,6 @@ class MongoDB(metaclass=SingleDB):
         my_col = self.db_name[col_name]
         return my_col
 
-    def get_data(self, col_name: str, **kwargs):
-        collection = self.connect_to_collection(col_name.title())
-        data = []
-        diagonal = kwargs.get('diagonal')
-        if diagonal:
-            data = self.filter_diagonal(diagonal, collection)
-        return data
-
     @staticmethod
     def filter_diagonal(get_diag, col):
         filter_cases = col.find({'ДІагональ': get_diag},
@@ -41,7 +33,7 @@ class MongoDB(metaclass=SingleDB):
     @staticmethod
     def filter_volume(get_volume, col):
         hdd_disks_data = []
-        if get_volume <= 256:
+        if get_volume <= 256 and get_volume != 0:
             hdd_disks_data = col.find({}, {'_id': 1, 'model': 1,
                                            'price': 1, 'image_link': 1})
 

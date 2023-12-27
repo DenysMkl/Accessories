@@ -85,4 +85,4 @@ def parse_params(item_url, header):
 
 # parse_cases(url_cases, headers, mydb, 'Cases')
 # parse_cases(url_headphones, headers, mydb, 'Headphones')
-parse_cases(url_hdd, headers, mydb, 'HDD_disks')
+parse_cases(url_hdd, headers, mydb, 'Disks')
