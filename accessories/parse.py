@@ -16,6 +16,8 @@ headers = {
     }
 url_cases = 'https://www.ctrs.com.ua/chexly-i-sumki-dlya-noutbukov/'
 url_headphones = 'https://www.ctrs.com.ua/naushniki/'
+url_hdd = 'https://www.ctrs.com.ua/vneshnie-zhestkie-diski/tip-nakopitelya_hdd/'
+
 
 def parse_cases(acc_url, header, db, collection) -> None:
     page_number = 1
@@ -81,5 +83,6 @@ def parse_params(item_url, header):
     return dictionary_of_data
 
 
-parse_cases(url_cases, headers, mydb, 'Cases')
+# parse_cases(url_cases, headers, mydb, 'Cases')
 # parse_cases(url_headphones, headers, mydb, 'Headphones')
+parse_cases(url_hdd, headers, mydb, 'HDD_disks')

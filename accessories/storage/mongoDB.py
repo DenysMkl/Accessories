@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from pymongo.cursor import Cursor
+
 import config
 import pymongo
 
@@ -21,11 +23,29 @@ class MongoDB(metaclass=SingleDB):
         my_col = self.db_name[col_name]
         return my_col
 
-    def get_data(self, col_name: str):
+    def get_data(self, col_name: str, **kwargs):
         collection = self.connect_to_collection(col_name.title())
-        data = collection.find({}, {'_id': 1, 'model': 1, 'price': 1, 'image_link': 1})
-
+        data = []
+        diagonal = kwargs.get('diagonal')
+        if diagonal:
+            data = self.filter_diagonal(diagonal, collection)
         return data
+
+    @staticmethod
+    def filter_diagonal(get_diag, col):
+        filter_cases = col.find({'ДІагональ': get_diag},
+                                {'_id': 1, 'model': 1,
+                                 'price': 1, 'image_link': 1})
+        return filter_cases
+
+    @staticmethod
+    def filter_volume(get_volume, col):
+        hdd_disks_data = []
+        if get_volume <= 256:
+            hdd_disks_data = col.find({}, {'_id': 1, 'model': 1,
+                                           'price': 1, 'image_link': 1})
+
+        return hdd_disks_data
 
     def close_connection(self):
         self.client.close()
