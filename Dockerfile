@@ -11,5 +11,3 @@ COPY ./Makefile /app/
 RUN make start-dev
 
 COPY . /app/
-
-CMD ["uvicorn", "accessories.cases_api:app", "--reload"]
