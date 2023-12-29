@@ -1,22 +1,16 @@
+import json
 import time
 
 import requests
+import schedule
 from bs4 import BeautifulSoup as bs
 from pymongo.errors import DuplicateKeyError
 
+import config
 from storage.mongoDB import MongoDB
 
-db = MongoDB()
-mydb = db.db_name
-
-headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-                      'AppleWebKit/537.36 (KHTML, like Gecko) '
-                      'Chrome/91.0.4472.124 Safari/537.36'
-    }
-url_cases = 'https://www.ctrs.com.ua/chexly-i-sumki-dlya-noutbukov/'
-url_headphones = 'https://www.ctrs.com.ua/naushniki/'
-url_hdd = 'https://www.ctrs.com.ua/vneshnie-zhestkie-diski/tip-nakopitelya_hdd/'
+mongodb = MongoDB()
+mydb = mongodb.db_name
 
 
 def parse_cases(acc_url, header, db, collection) -> None:
@@ -52,7 +46,7 @@ def parse_cases(acc_url, header, db, collection) -> None:
             except AttributeError as error:
                 continue
 
-            item_dict.update(parse_params(full_link, headers))
+            item_dict.update(parse_params(full_link, header))
             item_dict.update({'_id': full_link})
             item_dict.update({'image_link': image.get('src')})
 
@@ -83,6 +77,18 @@ def parse_params(item_url, header):
     return dictionary_of_data
 
 
-# parse_cases(url_cases, headers, mydb, 'Cases')
-# parse_cases(url_headphones, headers, mydb, 'Headphones')
-parse_cases(url_hdd, headers, mydb, 'Disks')
+def parse_all_links(database):
+    with open('../urls_parse.json') as file:
+        urls = json.load(file)
+        for name, url in urls.items():
+            mongodb.delete_data(database[name])
+            parse_cases(url, config.HEADERS, mydb, name)
+
+
+def run():
+    # schedule.every().day.at("12:00").do()
+    parse_all_links(mydb)
+
+
+if __name__ == '__main__':
+    run()

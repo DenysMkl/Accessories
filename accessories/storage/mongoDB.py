@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from pymongo.cursor import Cursor
 
 import config
 import pymongo
@@ -19,13 +18,22 @@ class MongoDB(metaclass=SingleDB):
         self.client = pymongo.MongoClient(config.MONGO_URI)
         self.db_name = self.client[config.DATABASE_NAME]
 
+    @staticmethod
+    def delete_data(col) -> None:
+        col.delete_many({})
+
     def connect_to_collection(self, col_name: str):
         my_col = self.db_name[col_name]
         return my_col
 
     @staticmethod
     def filter_diagonal(get_diag, col):
-        filter_cases = col.find({'ДІагональ': get_diag},
+        if round(get_diag) != get_diag:
+            entered_diagonal = get_diag
+        else:
+            entered_diagonal = int(get_diag)
+        diagonal_to_str = f'{entered_diagonal}"'.replace('.', ',')
+        filter_cases = col.find({'ДІагональ': diagonal_to_str},
                                 {'_id': 1, 'model': 1,
                                  'price': 1, 'image_link': 1})
         return filter_cases
@@ -41,3 +49,11 @@ class MongoDB(metaclass=SingleDB):
 
     def close_connection(self):
         self.client.close()
+
+
+# obj = MongoDB()
+# coll = obj.db_name['Disks']
+# data = coll.find({"model": {'$regex': '1Tb'}})
+#
+# for i in data:
+#     print(i)

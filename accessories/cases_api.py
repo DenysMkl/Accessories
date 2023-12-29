@@ -12,7 +12,7 @@ connect = MongoDB()
 @app.get('/{item_type}', response_model=List)
 async def get_accessories(item_type: str,
                           volume: int = 0,
-                          diagonal: str = '',
+                          diagonal: float = 0,
                           model: str = ''):
     get_params = {'volume': volume,
                   'diagonal': diagonal,
