@@ -5,11 +5,11 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 WORKDIR /app
 
-COPY ./requirements.txt /code/
-COPY ./Makefile /code/
+COPY ./requirements.txt /app/
+COPY ./Makefile /app/
 
 RUN make start-dev
 
-COPY . /code/
+COPY . /app/
 
 CMD ["uvicorn", "accessories.cases_api:app", "--reload"]
