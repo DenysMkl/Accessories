@@ -9,6 +9,10 @@ app = FastAPI()
 connect = MongoDB()
 
 
+@app.get('/')
+async def hello():
+    return {'hello': 'world'}
+
 @app.get('/{item_type}', response_model=List)
 async def get_accessories(item_type: str,
                           volume: int = 0,

@@ -8,6 +8,8 @@ WORKDIR /app
 COPY ./requirements.txt /app/
 COPY ./Makefile /app/
 
-RUN make start-dev
+RUN pip install -r requirements.txt
 
 COPY . /app/
+
+CMD ["uvicorn", "Accessories.accessories.cases_api:app", "--host", "0.0.0.0", "--reload"]
