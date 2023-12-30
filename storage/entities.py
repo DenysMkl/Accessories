@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from accessories.storage.mongoDB import MongoDB
+from mongoDB import MongoDB
 
 
 class Entity(ABC):
