@@ -12,5 +12,8 @@ create-venv:
 build:
 	docker build -t ${IMAGE_NAME}:latest .
 
+run:
+	docker run -d --name mycon -p 80:80 ${IMAGE_NAME}
+
 clean:
 	rm -r ${VIRTUAL_ENV}
