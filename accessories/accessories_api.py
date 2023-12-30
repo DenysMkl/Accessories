@@ -2,8 +2,9 @@ from typing import List
 
 from fastapi import FastAPI
 
-from accessories.storage.mongoDB import MongoDB
-from accessories import entities
+import include_path
+import entities
+from mongoDB import MongoDB
 
 app = FastAPI()
 connect = MongoDB()
