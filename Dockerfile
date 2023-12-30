@@ -3,14 +3,12 @@ FROM python:3.10
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-WORKDIR /app
+WORKDIR /code
 
-COPY ./requirements.txt /app/
+COPY ./requirements.txt /code/requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip install -r /code/requirements.txt
 
-COPY . /app/
+COPY . /code/
 
-RUN chmod +x ./entrypoint.sh
-
-CMD ["./entrypoint.sh"]
+CMD ["ls", "-la"]
