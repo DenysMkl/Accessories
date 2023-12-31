@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 VIRTUAL_ENV := venv
 PYTHON := ${VIRTUAL_ENV}/bin/python3
-IMAGE_NAME := accessories-app
+IMAGE_NAME := accessories-web
 
 start-dev:
 	${PYTHON} -m pip install -r requirements.txt
