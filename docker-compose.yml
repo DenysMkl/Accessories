@@ -3,9 +3,11 @@ version: '3'
 services:
   web:
     image: accessories-web:latest
+    volumes:
+      - .:/code
     container_name: my_con
     ports:
-      - '80:80'
+      - '8000:8000'
     restart: always
     environment:
       - MONGODB_URL=mongodb://mongo_db/
