@@ -1,13 +1,15 @@
 import json
 import time
 
+import pymongo
 import requests
 import schedule
 from bs4 import BeautifulSoup as bs
 from pymongo.errors import DuplicateKeyError
 
 import config
-from storage.mongoDB import MongoDB
+import include_path
+from mongoDB import MongoDB
 
 mongodb = MongoDB()
 mydb = mongodb.db_name
@@ -49,7 +51,7 @@ def parse_cases(acc_url, header, db, collection) -> None:
             item_dict.update(parse_params(full_link, header))
             item_dict.update({'_id': full_link})
             item_dict.update({'image_link': image.get('src')})
-
+            print(item_dict)
             try:
                 curr_collection.insert_one(item_dict)
             except DuplicateKeyError as e:

@@ -15,8 +15,8 @@ class SingleDB(type):
 
 class MongoDB(metaclass=SingleDB):
     def __init__(self):
-        self.client = pymongo.MongoClient(config.MONGO_URI)
-        self.db_name = self.client[config.DATABASE_NAME]
+        self.client = pymongo.MongoClient('mongodb://localhost:27107/')
+        self.db_name = self.client['Accessories']
 
     @staticmethod
     def delete_data(col) -> None:

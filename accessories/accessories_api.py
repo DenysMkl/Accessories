@@ -12,7 +12,7 @@ connect = MongoDB()
 
 @app.get('/')
 async def hello():
-    return {'hello': 'world'}
+    return {'hello': 'world!'}
 
 
 @app.get('/{item_type}', response_model=List)

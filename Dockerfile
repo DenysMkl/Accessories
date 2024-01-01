@@ -11,6 +11,7 @@ RUN pip install -r /code/requirements.txt
 
 COPY . /code/
 
-RUN chmod +x ./entrypoint.sh
+#RUN chmod +x ./entrypoint.sh
+#RUN ./entrypoint.sh parse
 
 CMD ["./entrypoint.sh"]
