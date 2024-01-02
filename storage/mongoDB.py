@@ -15,7 +15,7 @@ class SingleDB(type):
 
 class MongoDB(metaclass=SingleDB):
     def __init__(self):
-        self.client = pymongo.MongoClient('mongodb://localhost:27017')
+        self.client = pymongo.MongoClient('mongodb://mongo_db/')
         self.db_name = self.client['Accessories']
 
     @staticmethod
