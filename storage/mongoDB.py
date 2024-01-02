@@ -15,7 +15,7 @@ class SingleDB(type):
 
 class MongoDB(metaclass=SingleDB):
     def __init__(self):
-        self.client = pymongo.MongoClient('mongodb://mongo_db/', connect=False)
+        self.client = pymongo.MongoClient('mongodb://localhost:27017')
         self.db_name = self.client['Accessories']
 
     @staticmethod
@@ -46,6 +46,13 @@ class MongoDB(metaclass=SingleDB):
                                            'price': 1, 'image_link': 1})
 
         return hdd_disks_data
+
+    @staticmethod
+    def filter_by_prod(get_name, col):
+        headphones_data = col.find({}, {'_id': 1, 'model': 1,
+                                        'price': 1, 'image_link': 1})
+        return headphones_data
+
 
     def close_connection(self):
         self.client.close()

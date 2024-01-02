@@ -3,7 +3,6 @@ import time
 
 import pymongo
 import requests
-import schedule
 from bs4 import BeautifulSoup as bs
 from pymongo.errors import DuplicateKeyError
 
@@ -83,6 +82,7 @@ def parse_all_links(database):
     with open('../urls_parse.json') as file:
         urls = json.load(file)
         for name, url in urls.items():
+            database[name].drop()
             database.create_collection(name)
             mongodb.delete_data(database[name])
             parse_cases(url, config.HEADERS, mydb, name)

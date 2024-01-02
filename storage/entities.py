@@ -17,7 +17,9 @@ class Headphone(Entity):
         super().__init__(name, entered_data)
 
     def get_data(self, connection: MongoDB) -> list:
-        pass
+        collection = connection.connect_to_collection(self.name)
+        data = connection.filter_by_prod(self.entered_data, collection)
+        return data
 
 
 class Case(Entity):
@@ -48,8 +50,8 @@ def client_code(type_of_acc: str, **kwargs):
         entity = Case(type_of_acc.title(),
                       kwargs.get('diagonal'))
     elif type_of_acc == 'headphones':
-        entity = Case(type_of_acc.title(),
-                      kwargs.get('model'))
+        entity = Headphone(type_of_acc.title(),
+                           kwargs.get('model'))
     else:
         return []
 

@@ -15,22 +15,19 @@ async def hello():
     return {'hello': 'world!'}
 
 
-@app.get('/cases', response_model=List)
-def get_cases():
-    db = connect.db_name
-    collection = db['Cases']
-    data = collection.find()
-    return list(data)
+@app.get('/{item_type}', response_model=List)
+async def get_accessories(item_type: str,
+                          volume: int = 0,
+                          diagonal: float = 0,
+                          model: str = '',
+                          page_numb: int = 1,
+                          page_size: int = 10):
 
-# @app.get('/{item_type}', response_model=List)
-# async def get_accessories(item_type: str,
-#                           volume: int = 0,
-#                           diagonal: float = 0,
-#                           model: str = ''):
-#     get_params = {'volume': volume,
-#                   'diagonal': diagonal,
-#                   'model': model}
-#
-#     data = entities.client_code(item_type, **get_params)
-#
-#     return data.get_data(connect)
+    get_params = {'volume': volume,
+                  'diagonal': diagonal,
+                  'model': model}
+    start = (page_numb - 1) * page_size
+    end = start + page_size
+    data = entities.client_code(item_type, **get_params)
+
+    return data.get_data(connect)[start:end]
