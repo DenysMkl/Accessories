@@ -15,6 +15,15 @@ services:
       - mongo_db
     networks:
       - backend
+  parse:
+    image: parse:latest
+    container_name: "parse"
+    depends_on:
+      - mongo_db
+    ports:
+      - '8080:8080'
+    networks:
+      - backend
   mongo_db:
     image: mongo:4.4.16
     container_name: "mongo_db"
