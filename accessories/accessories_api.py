@@ -16,7 +16,7 @@ async def get_accessories(item_type: str,
                           diagonal: float = 0,
                           model: str = '',
                           page_numb: int = 1,
-                          page_size: int = 10):
+                          page_size: int = 3):
 
     get_params = {'volume': volume,
                   'diagonal': diagonal,
