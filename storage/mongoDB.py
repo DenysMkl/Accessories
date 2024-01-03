@@ -26,8 +26,9 @@ class MongoDB(metaclass=SingleDB):
         my_col = self.db_name[col_name]
         return my_col
 
-    @staticmethod
-    def filter_diagonal(get_diag, col):
+    def filter_diagonal(self, get_diag, col):
+        if not get_diag:
+            return self.get_all_data(col)
         if round(get_diag) != get_diag:
             entered_diagonal = get_diag
         else:
@@ -38,8 +39,9 @@ class MongoDB(metaclass=SingleDB):
                                  'price': 1, 'image_link': 1})
         return filter_cases
 
-    @staticmethod
-    def filter_volume(get_volume, col):
+    def filter_volume(self, get_volume, col):
+        if not get_volume:
+            return self.get_all_data(col)
         hdd_disks_data = []
         if get_volume <= 256 and get_volume != 0:
             hdd_disks_data = col.find({}, {'_id': 1, 'model': 1,
@@ -47,9 +49,26 @@ class MongoDB(metaclass=SingleDB):
 
         return hdd_disks_data
 
+    def filter_model(self, get_model: str, col):
+        if not get_model:
+            return self.get_all_data(col)
+        data = []
+        if get_model.lower() == 'apple':
+            data = col.find({"model": {'$regex': 'Apple'}})
+        else:
+            data = col.find({"model": {'$not': {'$regex': 'Apple'}}},
+                            {'_id': 1, 'model': 1,
+                             'price': 1, 'image_link': 1})
+        return data
+
+    @staticmethod
+    def get_all_data(col):
+        data = col.find({}, {'_id': 1, 'model': 1,
+                             'price': 1, 'image_link': 1})
+        return data
+
     def close_connection(self):
         self.client.close()
-
 
 # obj = MongoDB()
 # coll = obj.db_name['Disks']
