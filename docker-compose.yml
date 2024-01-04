@@ -12,7 +12,7 @@ services:
     environment:
       - MONGODB_URL=mongodb://mongodb/
     depends_on:
-      - mongo_db
+      - mongodb
     networks:
       - backend
   parse:
