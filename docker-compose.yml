@@ -7,7 +7,7 @@ services:
       - .:/code
     container_name: my_con
     ports:
-      - '8000:8000'
+      - '8002:8002'
     restart: always
     environment:
       - MONGODB_URL=mongodb://mongo_db/
