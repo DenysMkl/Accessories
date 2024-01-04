@@ -19,7 +19,7 @@ services:
     image: parse:latest
     container_name: "parse"
     depends_on:
-      - mongo_db
+      - mongodb
     ports:
       - '8080:8080'
     networks:
