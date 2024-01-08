@@ -16,6 +16,9 @@ mydb = mongodb.db_name
 
 
 def parse_cases(acc_url, header, db, collection) -> None:
+    """Scrapes data about all products by acc_url
+    on all pages and inserts it to MongoDB.
+    """
     page_number = 1
     prev_page = None
     curr_collection = db[collection]
@@ -62,6 +65,9 @@ def parse_cases(acc_url, header, db, collection) -> None:
 
 
 def parse_params(item_url, header):
+    """Scrapes detailed data about specific product and returns
+    dictionary of this data.
+    """
     curr_url = f'{item_url}?tab=characteristic'
     page = requests.get(curr_url, headers=header)
     soup = bs(page.content, 'html.parser')
@@ -80,6 +86,11 @@ def parse_params(item_url, header):
 
 
 def parse_all_links(database):
+    """Create collections with names from urls_parse.json.
+
+    Each time this function restores data by dropping db and
+    creating a new one.
+    """
     with open('../urls_parse.json') as file:
         urls = json.load(file)
         for name, url in urls.items():
