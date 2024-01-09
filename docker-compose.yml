@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  web:
+    image: accessories-web:latest
+    volumes:
+      - .:/code
+    container_name: my_con
+    ports:
+      - '8002:8002'
+    restart: always
+    environment:
+      - MONGODB_URL=mongodb://mongodb/
+    depends_on:
+      - mongodb
+    networks:
+      - backend
+  parse:
+    image: parse:latest
+    container_name: "parse"
+    depends_on:
+      - mongodb
+    ports:
+      - '8080:8080'
+    networks:
+      - backend
+  mongodb:
+    image: mongo:4.4.16
+    container_name: "mongodb"
+    ports:
+      - '27107:27017'
+    environment:
+      - MONGO_INITDB_DATABASE=Accessories
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
