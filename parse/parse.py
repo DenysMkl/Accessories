@@ -101,8 +101,9 @@ def parse_all_links(database):
 
 
 def run():
-    # schedule.every().day.at("12:00").do()
-    parse_all_links(mydb)
+    schedule.every().day.at("12:00").do(parse_all_links(mydb))
+    while True:
+        schedule.run_pending()
 
 
 if __name__ == '__main__':
