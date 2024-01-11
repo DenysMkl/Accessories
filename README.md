@@ -11,7 +11,7 @@ This project is a Python-based web scraping tool that extracts data about access
 3. Docker
 
 ### Run
-* https://github.com/DenysMkl/Accessories.git
+* git clone https://github.com/DenysMkl/Accessories.git
 
 ### Setup workplace
 1. Install virtual environment (not required)
