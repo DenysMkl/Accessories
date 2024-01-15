@@ -52,9 +52,12 @@ class MongoDB(metaclass=SingleDB):
     def filter_model(self, get_model: str, col):
         if not get_model:
             return self.get_all_data(col)
-        data = []
+
         if get_model.lower() == 'apple':
-            data = col.find({"model": {'$regex': 'Apple'}})
+            data = col.find({"model": {'$regex': 'Apple'}},
+                            {'_id': 1, 'model': 1,
+                             'price': 1, 'image_link': 1}
+                            )
         else:
             data = col.find({"model": {'$not': {'$regex': 'Apple'}}},
                             {'_id': 1, 'model': 1,
