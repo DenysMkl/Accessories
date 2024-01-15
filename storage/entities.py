@@ -19,7 +19,7 @@ class Headphone(Entity):
     def get_data(self, connection: MongoDB) -> list:
         collection = connection.connect_to_collection(self.name)
         data = connection.filter_model(self.entered_data, collection)
-        return data
+        return list(data)
 
 
 class Case(Entity):
@@ -29,7 +29,7 @@ class Case(Entity):
     def get_data(self, connection: MongoDB) -> list:
         collection = connection.connect_to_collection(self.name)
         data = connection.filter_diagonal(self.entered_data, collection)
-        return data
+        return list(data)
 
 
 class Disk(Entity):
@@ -39,7 +39,7 @@ class Disk(Entity):
     def get_data(self, connection: MongoDB):
         collection = connection.connect_to_collection(self.name)
         data = connection.filter_volume(self.entered_data, collection)
-        return data
+        return list(data)
 
 
 def client_code(type_of_acc: str, **kwargs):
